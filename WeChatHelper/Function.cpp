@@ -302,6 +302,4 @@ void OpenUrl(wchar_t * Url)
 		add esp, 0x14
 		popad
 	}
-
-
 }

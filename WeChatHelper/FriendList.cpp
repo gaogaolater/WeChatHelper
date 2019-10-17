@@ -201,6 +201,32 @@ __declspec(naked) void GetUserListInfo()
 	}
 }
 
+string GetUserListInfoForRestAPI()
+{
+	if (userInfoList.size() == 0) {
+		return "{code:-1}";
+	}
+	string friendListString = "{code:0,list:[";
+	int index = 0;
+	int i = 10;
+	for (auto& userInfoOld : userInfoList)
+	{
+		index++;
+		string wxId = wstringToString(get<0>(userInfoOld));
+		string wxName = wstringToString(get<1>(userInfoOld));
+		string nickName = wstringToString(get<3>(userInfoOld));
+		if (wxId == "" && wxName == "" && nickName == "") continue;
+		char tmp[500] = { 0 };
+		sprintf_s(tmp, "{wxId:'%s',wxName:'%s',nickName:'%s'}", wxId.c_str(), wxName.c_str(), nickName.c_str());
+		friendListString.append(tmp);
+		if (userInfoList.size() != index) {
+			friendListString.append(",");
+		}
+	}
+	friendListString.append("]}");
+	return friendListString;
+}
+
 
 //************************************************************
 // 函数名称: ReSendUser
@@ -268,12 +294,10 @@ void SendUserListInfo()
 	LPVOID pUserNick = *((LPVOID *)(r_esi + 0x8C));
 	LPVOID pUserReMark = *((LPVOID *)(r_esi + 0x78));
 
-
 	swprintf_s(user->UserId, L"%s", (wchar_t*)pUserWxid);
 	swprintf_s(user->UserNumber, L"%s", (wchar_t*)pUserNumber);
 	swprintf_s(user->UserNickName, L"%s", (wchar_t*)pUserNick);
 	swprintf_s(user->UserRemark, L"%s", (wchar_t*)pUserReMark);
-
 
 	//发送到控制端
 	HWND hWnd = FindWindow(NULL, TEXT("微信助手"));

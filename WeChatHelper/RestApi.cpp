@@ -3,8 +3,8 @@
 #include "FriendList.h"
 #include "HttpServer.h"
 #include "mongoose.h"
+#include <tchar.h>
 using namespace std;
-
 
 wchar_t* char2wchar(const char* cchar)
 {
@@ -16,7 +16,7 @@ wchar_t* char2wchar(const char* cchar)
 	return m_wchar;
 }
 
-string ShowQrPicture(http_message* http_req)
+string RestAPIShowQrPicture(http_message* http_req)
 {
 	return "";
 }
@@ -37,12 +37,17 @@ string RestAPISendTextMessage(http_message* http_req)
 	return "{code:0}";
 }
 
-string GetSelfInformation(http_message* http_req)
+string RestAPIGetSelfInformation(http_message* http_req)
 {
 	return "";
 }
 
-string WxLogout(http_message* http_req)
+string RestAPILogout(http_message* http_req)
 {
 	return "";
+}
+
+string RestAPIGetFriendList(http_message* http_req)
+{
+	return GetUserListInfoForRestAPI();
 }

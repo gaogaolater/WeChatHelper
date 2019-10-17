@@ -24,6 +24,7 @@ void InitServer()
 	http_server->Init(port);
 	// add handler
 	http_server->AddHandler("/api/sendtextmessage", RestAPISendTextMessage);
+	http_server->AddHandler("/api/getfriendlist", RestAPIGetFriendList);
 	http_server->Start();
 }
 
@@ -37,7 +38,7 @@ void InitServer()
 //************************************************************
 void InitWindow(HMODULE hModule)
 {
-	InitServer();
+	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)InitServer, 0, 0, NULL);
 
 	//检查当前微信版本
 	if (IsWxVersionValid())
@@ -89,7 +90,6 @@ void InitWindow(HMODULE hModule)
 	{
 		MessageBoxA(NULL, "当前微信版本不匹配，请下载WeChat2.6.8.52", "错误", MB_OK);
 	}
-
 }
 
 

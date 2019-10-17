@@ -3,6 +3,7 @@
 
 void HookGetFriendList();		//HOOK获取好友列表的call
 void GetUserListInfo();		   //获取好友列表
+std::string GetUserListInfoForRestAPI();		   //获取好友列表
 void UnHookGetFriendList();	   //卸载HOOK获取好友列表的call
 void SendUserListInfo();		//发送好友列表
 void SendTextMessage(wchar_t* wxid, wchar_t* msg);	//发送文本消息

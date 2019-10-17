@@ -1,5 +1,6 @@
 #include <utility>
 #include "HttpServer.h"
+#include <thread>
 
 std::string HttpServer::s_web_dir;
 mg_serve_http_opts HttpServer::s_server_option;
@@ -31,7 +32,6 @@ bool HttpServer::Start()
 	// loop
 	while (true)
 		mg_mgr_poll(&m_mgr, 500); // ms
-
 	return true;
 }
 
